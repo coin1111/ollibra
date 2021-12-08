@@ -58,3 +58,26 @@ pub fn native_sha3_256(
         smallvec![Value::vector_u8(hash_vec)],
     ))
 }
+
+pub fn native_keccak_256(
+    context: &impl NativeContext,
+    _ty_args: Vec<Type>,
+    mut arguments: VecDeque<Value>,
+) -> PartialVMResult<NativeResult> {
+    debug_assert!(_ty_args.is_empty());
+    debug_assert!(arguments.len() == 1);
+
+    let hash_arg = pop_arg!(arguments, Vec<u8>);
+
+    let cost = native_gas(
+        context.cost_table(),
+        NativeCostIndex::KECCAK_256,
+        hash_arg.len(),
+    );
+
+    let hash_vec = HashValue::sha3_256_of(hash_arg.as_slice()).to_vec();
+    Ok(NativeResult::ok(
+        cost,
+        smallvec![Value::vector_u8(hash_vec)],
+    ))
+}

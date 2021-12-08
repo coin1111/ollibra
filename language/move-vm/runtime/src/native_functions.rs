@@ -51,6 +51,7 @@ pub(crate) enum NativeFunction {
     DecimalDemo,
     DecimalSingle,
     DecimalPair,
+    HashKeccak_256,
 }
 
 impl NativeFunction {
@@ -89,6 +90,7 @@ impl NativeFunction {
             (&CORE_CODE_ADDRESS, "Decimal", "decimal_demo") => DecimalDemo,
             (&CORE_CODE_ADDRESS, "Decimal", "single_op") => DecimalSingle,
             (&CORE_CODE_ADDRESS, "Decimal", "pair_op") => DecimalPair,
+            (&CORE_CODE_ADDRESS, "OLCrypto", "keccak_256") => HashKeccak_256, // temporary put it in Decimal module
 
             _ => return None,
         })
@@ -129,6 +131,7 @@ impl NativeFunction {
             Self::DecimalDemo => ol_decimal::native_decimal_demo(ctx, t, v),
             Self::DecimalSingle => ol_decimal::native_decimal_single(ctx, t, v),
             Self::DecimalPair => ol_decimal::native_decimal_pair(ctx, t, v),
+            Self::HashKeccak_256 => hash::native_keccak_256(ctx, t, v),
         };
         debug_assert!(match &result {
             Err(e) => e.major_status().status_type() == StatusType::InvariantViolation,
