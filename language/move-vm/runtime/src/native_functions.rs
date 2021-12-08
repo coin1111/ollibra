@@ -90,7 +90,7 @@ impl NativeFunction {
             (&CORE_CODE_ADDRESS, "Decimal", "decimal_demo") => DecimalDemo,
             (&CORE_CODE_ADDRESS, "Decimal", "single_op") => DecimalSingle,
             (&CORE_CODE_ADDRESS, "Decimal", "pair_op") => DecimalPair,
-            (&CORE_CODE_ADDRESS, "XHash", "keccak_256") => HashKeccak256, // temporary put it in Decimal module
+            (&CORE_CODE_ADDRESS, "XHash", "keccak_256") => HashKeccak256,
 
             _ => return None,
         })

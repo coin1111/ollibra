@@ -1,7 +1,6 @@
 // Copyright (c) The Diem Core Contributors
 // SPDX-License-Identifier: Apache-2.0
 
-use diem_crypto::HashValue;
 use move_binary_format::errors::PartialVMResult;
 use move_vm_types::{
     gas_schedule::NativeCostIndex,
@@ -9,6 +8,7 @@ use move_vm_types::{
     natives::function::{native_gas, NativeContext, NativeResult},
     values::Value,
 };
+use tiny_keccak::{Hasher};
 use smallvec::smallvec;
 use std::collections::VecDeque;
 
@@ -28,7 +28,14 @@ pub fn native_keccak_256(
         hash_arg.len(),
     );
 
-    let hash_vec = HashValue::sha3_256_of(hash_arg.as_slice()).to_vec();
+    let mut sha3 = ::tiny_keccak::Sha3::v256();
+    let data = hash_arg.as_slice();
+    sha3.update(&data);
+    let mut output = [0u8; 32];
+    sha3.finalize(&mut output);
+    let hash_vec = output.to_vec();
+
+   // let hash_vec = HashValue::sha3_256_of(hash_arg.as_slice()).to_vec();
     Ok(NativeResult::ok(
         cost,
         smallvec![Value::vector_u8(hash_vec)],
