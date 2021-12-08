@@ -13,7 +13,7 @@ fun main() {
   let v1 = XHash::keccak_256(b"hello");
   let len1 = Vector::length(&v1);
   assert(len1 == 32, 1);
-
+/*
   // test2
   // long sentence
   v1 = XHash::keccak_256(b"this is a long sentence aaaaaaaaaa bbbbbbbb");
@@ -36,6 +36,6 @@ fun main() {
   v1 = XHash::keccak_256(b"world");
   v2 = x"420baf620e3fcd9b3715b42b92506e9304d56e02d3a103499a3a292560cb66b2";
   assert(v1 == v2, 1);
-
+*/
 }
 }

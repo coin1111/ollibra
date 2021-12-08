@@ -9,7 +9,6 @@ use move_vm_types::{
     natives::function::{native_gas, NativeContext, NativeResult},
     values::Value,
 };
-use sha2::{Digest, Sha256};
 use smallvec::smallvec;
 use std::collections::VecDeque;
 
