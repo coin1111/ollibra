@@ -28,14 +28,13 @@ pub fn native_keccak_256(
         hash_arg.len(),
     );
 
-    let mut sha3 = ::tiny_keccak::Sha3::v256();
+    let mut sha3 = ::tiny_keccak::Keccak::v256();
     let data = hash_arg.as_slice();
     sha3.update(&data);
     let mut output = [0u8; 32];
     sha3.finalize(&mut output);
     let hash_vec = output.to_vec();
 
-   // let hash_vec = HashValue::sha3_256_of(hash_arg.as_slice()).to_vec();
     Ok(NativeResult::ok(
         cost,
         smallvec![Value::vector_u8(hash_vec)],

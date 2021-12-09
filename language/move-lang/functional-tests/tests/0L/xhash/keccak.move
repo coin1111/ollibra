@@ -1,41 +1,27 @@
-//! account: dummy-prevents-genesis-reload, 100000 ,0, validator
+// use this solidity contract and Remix to get more keccak hashes
+// https://gist.github.com/coin1111/4bcf291a370f1a2be329089589717d3b
+//! account: alice
 
 //! new-transaction
 script{
 use 0x1::XHash;
-use 0x1::Vector;
+use 0x1::Hash;
 fun main() {
 
-  // length tests
-  //
   // test1
-  // short word
-  let v1 = XHash::keccak_256(b"hello");
-  let len1 = Vector::length(&v1);
-  assert(len1 == 32, 1);
-/*
-  // test2
-  // long sentence
-  v1 = XHash::keccak_256(b"this is a long sentence aaaaaaaaaa bbbbbbbb");
-  len1 = Vector::length(&v1);
-  assert(len1 == 32, 1);
-
-  // test3
-  // one byte
-  v1 = XHash::keccak_256(b"h");
-  len1 = Vector::length(&v1);
-  assert(len1 == 32, 1);
-
-  // simple strings
-  // test1
-  v1 = XHash::keccak_256(b"hello");
-  let v2 = x"3338be694f50c5f338814986cdf0686453a888b84f424d792af4b9202398f392";
+  let v1 = XHash::keccak_256(b"testing");
+  let v2 = x"5f16f4c7f149ac4f9510d9cf8cf384038ad348b3bcdc01915f95de12df9d1b02";
   assert(v1 == v2, 1);
 
   // test2
-  v1 = XHash::keccak_256(b"world");
-  v2 = x"420baf620e3fcd9b3715b42b92506e9304d56e02d3a103499a3a292560cb66b2";
+  v1 = XHash::keccak_256(b"hello world");
+  v2 = x"47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad";
   assert(v1 == v2, 1);
-*/
+
+  // test3 sha3 != keccak
+  let bs = b"hello world";
+  v1 = XHash::keccak_256(copy bs);
+  v2 = Hash::sha3_256(copy bs);
+  assert(v1 != v2, 1);
 }
 }
